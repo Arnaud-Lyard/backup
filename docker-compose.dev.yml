@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   playgit-database:
     image: mysql:latest

@@ -1,10 +1,4 @@
 'use client';
-import {
-  Dropdown,
-  DropdownButton,
-  DropdownItem,
-  DropdownMenu,
-} from '@/components/common/Dropdown';
 import { IApiAddresses } from '@/types/Api';
 import {
   Button,
@@ -13,23 +7,41 @@ import {
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
-  Field,
-  Label,
   Popover,
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
   Transition,
 } from '@headlessui/react';
-import { MagnifyingGlassCircleIcon } from '@heroicons/react/20/solid';
 import {
   CheckIcon,
-  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   ChevronUpDownIcon,
 } from '@heroicons/react/20/solid';
 import { Fragment, useEffect, useState } from 'react';
+import {
+  add,
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  getDay,
+  isEqual,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  parse,
+  parseISO,
+  startOfToday,
+} from 'date-fns';
+import { fr } from 'date-fns/locale';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 export function Search() {
+  const today = startOfToday();
   const [address, setAddress] = useState('');
   const [date, setDate] = useState('');
   const [selectedAddress, setSelectedAddress] = useState<{
@@ -41,8 +53,9 @@ export function Search() {
   const [addresses, setAddresses] = useState<
     { id: string; name: string }[] | undefined
   >([]);
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
 
-  // Fonction de gestion du changement de l'adresse (requête API à intégrer ici)
   const fetchAddresses = async (searchTerm: string) => {
     if (!searchTerm) return;
 
@@ -75,18 +88,35 @@ export function Search() {
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
+  const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+
+  const days = eachDayOfInterval({
+    start: firstDayCurrentMonth,
+    end: endOfMonth(firstDayCurrentMonth),
+  });
+
+  function previousMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+  }
+
+  function nextMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+  }
+
   return (
     <>
-      <div className="flex justify-center py-8">
+      <div className="flex justify-center py-8 px-2 sm:px-0">
         {/* Conteneur avec bordure et légère ombre */}
-        <div className="border border-gray-300 rounded-full flex">
+        <div className="border border-slate-200 rounded-full flex">
           {/* Partie Desktop */}
           <PopoverGroup className={'flex'}>
             <Popover>
               {({ open }) => (
                 <>
                   <PopoverButton
-                    className={`hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
+                    className={`transition duration-300 hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
                       open ? 'bg-slate-100' : ''
                     }`}
                   >
@@ -94,7 +124,7 @@ export function Search() {
                   </PopoverButton>
                   <PopoverPanel
                     anchor="bottom start"
-                    className="flex flex-col w-[465px] bg-white border-gray-300 shadow-md mt-5"
+                    className="flex flex-col w-[465px] bg-white mt-5 px-2 sm:px-0"
                   >
                     <Combobox
                       value={selectedAddress}
@@ -104,7 +134,8 @@ export function Search() {
                     >
                       <ComboboxInput
                         name="address"
-                        className="w-full py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-2 border border-zinc-950/10 data-[hover]:border-zinc-950/20 focus:outline-none"
+                        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none  focus:border-slate-400
+                        hover:border-slate-300 shadow-sm focus:shadow"
                         displayValue={(address: any) => address?.name || ''}
                         onChange={(event) => setQuery(event.target.value)}
                         required={true}
@@ -189,7 +220,7 @@ export function Search() {
               {({ open }) => (
                 <>
                   <PopoverButton
-                    className={`hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
+                    className={`transition duration-300 hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
                       open ? 'bg-slate-100' : ''
                     }`}
                   >
@@ -197,116 +228,122 @@ export function Search() {
                   </PopoverButton>
                   <PopoverPanel
                     anchor={{ to: 'bottom start', offset: '-180px' }}
-                    className="flex flex-col w-[465px] bg-white border-gray-300 shadow-md mt-5"
+                    className="flex flex-col w-[465px] bg-white mt-5 px-2 sm:px-0 max-[465px]:w-full"
                   >
-                    <a href="/analytics">Analytics</a>
-                    <a href="/engagement">Engagement</a>
-                    <a href="/security">Security</a>
-                    <a href="/integrations">Integrations</a>
+                    <div className="">
+                      <div className="mt-2 text-center p-2 border border-slate-200 rounded-md">
+                        <div className="flex items-center text-gray-900">
+                          <button
+                            type="button"
+                            onClick={previousMonth}
+                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                          >
+                            <span className="sr-only">Mois précédent</span>
+                            <ChevronLeftIcon
+                              className="size-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                          <div className="flex-auto text-sm font-semibold">
+                            {format(firstDayCurrentMonth, 'MMMM yyyy', {
+                              locale: fr,
+                            })}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={nextMonth}
+                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                          >
+                            <span className="sr-only">Mois suivant</span>
+                            <ChevronRightIcon
+                              className="size-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        </div>
+                        <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500">
+                          <div>L</div>
+                          <div>M</div>
+                          <div>M</div>
+                          <div>J</div>
+                          <div>V</div>
+                          <div>S</div>
+                          <div>D</div>
+                        </div>
+                        <div className="grid grid-cols-7 mt-2 text-sm">
+                          {days.map((day, dayIdx) => (
+                            <div
+                              key={day.toString()}
+                              className={classNames(
+                                dayIdx === 0 && colStartClasses[getDay(day)],
+                                'py-1.5'
+                              )}
+                            >
+                              <button
+                                type="button"
+                                onClick={() => setSelectedDay(day)}
+                                className={classNames(
+                                  isEqual(day, selectedDay) && 'text-white',
+                                  !isEqual(day, selectedDay) &&
+                                    isToday(day) &&
+                                    'text-red-500',
+                                  !isEqual(day, selectedDay) &&
+                                    !isToday(day) &&
+                                    isSameMonth(day, firstDayCurrentMonth) &&
+                                    'text-gray-900',
+                                  !isEqual(day, selectedDay) &&
+                                    !isToday(day) &&
+                                    !isSameMonth(day, firstDayCurrentMonth) &&
+                                    'text-gray-400',
+                                  isEqual(day, selectedDay) &&
+                                    isToday(day) &&
+                                    'bg-red-500',
+                                  isEqual(day, selectedDay) &&
+                                    !isToday(day) &&
+                                    'bg-gray-900',
+                                  !isEqual(day, selectedDay) &&
+                                    'hover:bg-gray-200',
+                                  (isEqual(day, selectedDay) || isToday(day)) &&
+                                    'font-semibold',
+                                  'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+                                )}
+                              >
+                                <time dateTime={format(day, 'yyyy-MM-dd')}>
+                                  {format(day, 'd')}
+                                </time>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                          Choisir
+                        </button>
+                      </div>
+                    </div>
                   </PopoverPanel>
                 </>
               )}
             </Popover>
           </PopoverGroup>
 
-          <Button className="w-36 h-12 rounded-full bg-black text-white p-3">
+          <Button className="w-36 h-18 rounded-full bg-black text-white p-3">
             Rechercher
           </Button>
-
-          {/* <Field>
-              <Label>Adresse des travaux :</Label>
-              <Combobox value={selected} onChange={setSelected}>
-                <div className="relative mt-1">
-                  <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus-within:ring-2 focus-within:ring-blue-500 sm:text-sm border hover:border-zinc-300">
-                    <ComboboxInput
-                      name="address"
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-2 border border-zinc-950/10 data-[hover]:border-zinc-950/20 focus:ring-blue-500 focus:outline-none"
-                      displayValue={(address: any) => address?.name || ''}
-                      onChange={(event) => setQuery(event.target.value)}
-                      required={true}
-                      placeholder="Lieu de l'intervention"
-                    />
-                    <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-                      <ChevronUpDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </ComboboxButton>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                    afterLeave={() => setQuery('')}
-                  >
-                    <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-none sm:text-sm">
-                      {loading ? (
-                        <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                          Chargement...
-                        </div>
-                      ) : addresses?.length === 0 && query !== '' ? (
-                        <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                          Aucune adresse trouvée.
-                        </div>
-                      ) : (
-                        addresses?.map((address) => (
-                          <ComboboxOption
-                            key={address.id}
-                            className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active
-                                  ? 'bg-blue-600 text-white'
-                                  : 'text-gray-900'
-                              }`
-                            }
-                            value={address}
-                          >
-                            {({ selected, active }) => (
-                              <>
-                                <span
-                                  className={`block truncate ${
-                                    selected ? 'font-medium' : 'font-normal'
-                                  }`}
-                                >
-                                  {address.name}
-                                </span>
-                                {selected ? (
-                                  <span
-                                    className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                      active ? 'text-white' : 'text-blue-600'
-                                    }`}
-                                  >
-                                    <CheckIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </ComboboxOption>
-                        ))
-                      )}
-                    </ComboboxOptions>
-                  </Transition>
-                </div>
-              </Combobox>
-            </Field> */}
-          {/* Partie Mobile */}
         </div>
-        {/* <DropdownSearch /> */}
       </div>
     </>
   );
 }
 
-// function DropdownSearch() {
-//   return (
-//     <div className="border border-gray-300 rounded-lg p-4 shadow-md mt-3">
-//       {/* Partie Desktop */}
-
-//       {/* Partie Mobile */}
-//     </div>
-//   );
-// }
+const colStartClasses = [
+  '',
+  'col-start-2',
+  'col-start-3',
+  'col-start-4',
+  'col-start-5',
+  'col-start-6',
+  'col-start-7',
+];

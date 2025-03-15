@@ -45,6 +45,7 @@ import {
   CheckBadgeIcon,
   Cog6ToothIcon,
   HomeIcon,
+  LockClosedIcon,
   QuestionMarkCircleIcon,
   SparklesIcon,
   Square2StackIcon,
@@ -173,6 +174,13 @@ export function ApplicationLayout({
               >
                 <Cog6ToothIcon />
                 <SidebarLabel>Mon entreprise</SidebarLabel>
+              </SidebarItem>
+              <SidebarItem
+                href="/admin/dashboard/closed-period"
+                current={pathname.startsWith('/admin/dashboard/closed-period')}
+              >
+                <LockClosedIcon />
+                <SidebarLabel>Périodes de fermeture</SidebarLabel>
               </SidebarItem>
               <SidebarItem
                 href="/admin/testimonial-list"

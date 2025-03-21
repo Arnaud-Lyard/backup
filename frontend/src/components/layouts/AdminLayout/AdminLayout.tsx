@@ -83,7 +83,7 @@ function AccountDropdownMenu({
   );
 }
 
-export function ApplicationLayout({
+export function AdminLayout({
   events,
   children,
 }: {
@@ -150,41 +150,15 @@ export function ApplicationLayout({
 
           <SidebarBody>
             <SidebarSection>
-              <SidebarItem href="/admin" current={pathname === '/admin'}>
+              <SidebarItem href="/" current={pathname === '/'}>
                 <HomeIcon />
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/admin/events"
-                current={pathname.startsWith('/admin/events')}
-              >
-                <Square2StackIcon />
-                <SidebarLabel>Events</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem
-                href="/admin/orders"
-                current={pathname.startsWith('/admin/orders')}
-              >
-                <TicketIcon />
-                <SidebarLabel>Orders</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem
-                href="/admin/dashboard/company"
-                current={pathname.startsWith('/admin/dashboard/company')}
-              >
-                <Cog6ToothIcon />
-                <SidebarLabel>Mon entreprise</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem
-                href="/admin/dashboard/closed-period"
-                current={pathname.startsWith('/admin/dashboard/closed-period')}
-              >
-                <LockClosedIcon />
-                <SidebarLabel>Périodes de fermeture</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem
-                href="/admin/testimonial-list"
-                current={pathname.startsWith('/admin/testimonial-list')}
+                href="/admin/dashboard/testimonial-list"
+                current={pathname.startsWith(
+                  '/admin/dashboard/testimonial-list'
+                )}
               >
                 <ChatBubbleBottomCenterIcon />
                 <SidebarLabel>Liste des Avis</SidebarLabel>
@@ -199,15 +173,6 @@ export function ApplicationLayout({
                 <SidebarLabel>Entreprises en attente</SidebarLabel>
               </SidebarItem>
             </SidebarSection>
-
-            {/* <SidebarSection className="max-lg:hidden">
-              <SidebarHeading>Upcoming Events</SidebarHeading>
-              {events.map((event) => (
-                <SidebarItem key={event.id} href={event.url}>
-                  {event.name}
-                </SidebarItem>
-              ))}
-            </SidebarSection> */}
 
             <SidebarSpacer />
 

@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Dto\CreateCompanyDto;
 use App\Dto\CreateTestimonialDto;
+use App\Dto\NewUnavailabilityDto;
 use App\Entity\Company;
 use App\Entity\Testimonial;
+use App\Entity\UnAvailability;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,5 +90,41 @@ final class ProfessionalController extends AbstractController
             return new JsonResponse(['status' => 200, 'message' => 'success'], Response::HTTP_CREATED);
         }
         return new JsonResponse(['status' => 409, 'message' => "Vous ne pouvez soumettre qu'un seul avis."], Response::HTTP_CONFLICT);
+    }
+
+    #[Route('/unavailability/new', name: 'unavailability_new')]
+    public function newUnavailability(#[MapRequestPayload()] NewUnavailabilityDto $newUnAvailability, EntityManagerInterface $entityManagerInterface): JsonResponse
+    {
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        $unAvailability = new UnAvailability();
+        $unAvailability->setCompany($company);
+        $unAvailability->setBeginDate(new \DateTime($newUnAvailability->beginDate));
+        $unAvailability->setEndDate(new \DateTime($newUnAvailability->endDate));
+        $entityManagerInterface->persist($unAvailability);
+        $entityManagerInterface->flush();
+        return new JsonResponse(['status' => 200, 'message' => 'success'], Response::HTTP_CREATED);
+    }
+
+    #[Route('/unavailability/edit/{id}', name: 'unavailability_edit')]
+    public function editUnavailability(#[MapRequestPayload()] NewUnavailabilityDto $newUnAvailability, EntityManagerInterface $entityManagerInterface, int $id): JsonResponse
+    {
+        $user = $this->getUser();
+        $unAvailability = $entityManagerInterface->getRepository(UnAvailability::class)->findOneBy(['id' => $id]);
+        $unAvailability->setBeginDate(new \DateTime($newUnAvailability->beginDate));
+        $unAvailability->setEndDate(new \DateTime($newUnAvailability->endDate));
+        $entityManagerInterface->persist($unAvailability);
+        $entityManagerInterface->flush();
+        return new JsonResponse(['status' => 200, 'message' => 'success'], Response::HTTP_CREATED);
+    }
+
+    #[Route('/unavailabilities/list', name: 'unavailabilities_list')]
+    public function unavailabilitiesList(SerializerInterface $serializer): JsonResponse
+    {
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        $unavailabilities = $company->getUnavailabilities();
+        $jsonUnavailabilities = $serializer->serialize($unavailabilities, 'json', ['groups' => 'getUnavailabilities']);
+        return new JsonResponse($jsonUnavailabilities, Response::HTTP_OK, [], true);
     }
 }

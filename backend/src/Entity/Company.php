@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -36,6 +38,17 @@ class Company
     #[ORM\Column(length: 255)]
     #[Groups(["getPendingCompanies"])]
     private ?string $logo = null;
+
+    /**
+     * @var Collection<int, UnAvailability>
+     */
+    #[ORM\OneToMany(targetEntity: UnAvailability::class, mappedBy: 'company')]
+    private Collection $unAvailabilities;
+
+    public function __construct()
+    {
+        $this->unAvailabilities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -98,6 +111,36 @@ class Company
     public function setLogo(string $logo): static
     {
         $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UnAvailability>
+     */
+    public function getUnAvailabilities(): Collection
+    {
+        return $this->unAvailabilities;
+    }
+
+    public function addUnAvailability(UnAvailability $unAvailability): static
+    {
+        if (!$this->unAvailabilities->contains($unAvailability)) {
+            $this->unAvailabilities->add($unAvailability);
+            $unAvailability->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUnAvailability(UnAvailability $unAvailability): static
+    {
+        if ($this->unAvailabilities->removeElement($unAvailability)) {
+            // set the owning side to null (unless already changed)
+            if ($unAvailability->getCompany() === $this) {
+                $unAvailability->setCompany(null);
+            }
+        }
 
         return $this;
     }

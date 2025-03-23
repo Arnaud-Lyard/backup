@@ -79,7 +79,7 @@ export default async function Event({
         <div className="flex flex-wrap items-center gap-6">
           <div className="w-32 shrink-0">
             <img
-              className="aspect-[3/2] rounded-lg shadow"
+              className="aspect-3/2 rounded-lg shadow-sm"
               src={event.imgUrl}
               alt=""
             />
@@ -120,7 +120,7 @@ export default async function Event({
         />
       </div>
       <Subheading className="mt-12">Recent orders</Subheading>
-      <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <Table className="mt-4 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Order number</TableHeader>

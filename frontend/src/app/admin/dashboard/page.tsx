@@ -59,7 +59,7 @@ export default async function Home() {
         <Stat title="Pageviews" value="823,067" change="+21.2%" />
       </div>
       <Subheading className="mt-14">Recent orders</Subheading>
-      <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <Table className="mt-4 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Order number</TableHeader>

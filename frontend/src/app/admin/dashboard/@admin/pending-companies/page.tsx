@@ -98,7 +98,7 @@ export default function PendingCompanies() {
   return (
     <>
       <Subheading className="mt-12">Entreprises en attente</Subheading>
-      <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <Table className="mt-4 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Nom de l&apos;entreprise</TableHeader>
@@ -160,7 +160,7 @@ export default function PendingCompanies() {
               <div className="-mx-1.5 -my-1.5">
                 <button
                   type="button"
-                  className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                  className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-hidden focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
                 >
                   <span className="sr-only">Fermer</span>
                   <XMarkIcon
@@ -204,7 +204,7 @@ export default function PendingCompanies() {
               <div className="-mx-1.5 -my-1.5">
                 <button
                   type="button"
-                  className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+                  className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
                 >
                   <span className="sr-only">Fermer</span>
                   <XMarkIcon

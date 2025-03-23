@@ -230,7 +230,7 @@ export default function OnBoarding() {
                   <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus-within:ring-2 focus-within:ring-blue-500 sm:text-sm border hover:border-zinc-300">
                     <ComboboxInput
                       name="address"
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-2 border border-zinc-950/10 data-[hover]:border-zinc-950/20 focus:ring-blue-500 focus:outline-none"
+                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-2 border border-zinc-950/10 data-hover:border-zinc-950/20 focus:ring-blue-500 focus:outline-hidden"
                       displayValue={(address: any) => address?.name || ''}
                       onChange={(event) => setQuery(event.target.value)}
                       required={true}
@@ -249,7 +249,7 @@ export default function OnBoarding() {
                     leaveTo="opacity-0"
                     afterLeave={() => setQuery('')}
                   >
-                    <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-none sm:text-sm">
+                    <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-hidden sm:text-sm">
                       {loading ? (
                         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                           Chargement...
@@ -316,7 +316,7 @@ export default function OnBoarding() {
             <div>
               <div className="col-span-full">
                 <div
-                  className="mt-2 flex justify-center rounded-lg border border-zinc-950/10 px-6 py-10 transition duration-200 ease-in-out hover:border-zinc-950/20 hover:shadow-sm"
+                  className="mt-2 flex justify-center rounded-lg border border-zinc-950/10 px-6 py-10 transition duration-200 ease-in-out hover:border-zinc-950/20 hover:shadow-xs"
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
                 >
@@ -328,7 +328,7 @@ export default function OnBoarding() {
                     <div className="mt-4 flex text-sm/6 text-gray-600">
                       <label
                         htmlFor="logo"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500"
+                        className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-hidden focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500"
                       >
                         <span>Télécharger un fichier</span>
                         <input
@@ -385,7 +385,7 @@ export default function OnBoarding() {
               <div className="-mx-1.5 -my-1.5">
                 <button
                   type="button"
-                  className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                  className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-hidden focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
                 >
                   <span className="sr-only">Fermer</span>
                   <XMarkIcon
@@ -429,7 +429,7 @@ export default function OnBoarding() {
               <div className="-mx-1.5 -my-1.5">
                 <button
                   type="button"
-                  className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+                  className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
                 >
                   <span className="sr-only">Fermer</span>
                   <XMarkIcon

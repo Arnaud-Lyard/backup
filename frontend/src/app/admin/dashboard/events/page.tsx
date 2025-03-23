@@ -58,7 +58,7 @@ export default async function Events() {
                   <div className="w-32 shrink-0">
                     <Link href={event.url} aria-hidden="true">
                       <img
-                        className="aspect-[3/2] rounded-lg shadow"
+                        className="aspect-3/2 rounded-lg shadow-sm"
                         src={event.imgUrl}
                         alt=""
                       />

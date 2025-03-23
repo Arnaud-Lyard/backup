@@ -25,7 +25,7 @@ export default async function Orders() {
         <Heading>Orders</Heading>
         <Button className="-my-0.5">Create order</Button>
       </div>
-      <Table className="mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <Table className="mt-8 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Order number</TableHeader>

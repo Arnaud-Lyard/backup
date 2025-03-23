@@ -134,8 +134,8 @@ export function Search() {
                     >
                       <ComboboxInput
                         name="address"
-                        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none  focus:border-slate-400
-                        hover:border-slate-300 shadow-sm focus:shadow"
+                        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-hidden  focus:border-slate-400
+                        hover:border-slate-300 shadow-sm focus:shadow-sm"
                         displayValue={(address: any) => address?.name || ''}
                         onChange={(event) => setQuery(event.target.value)}
                         required={true}
@@ -157,7 +157,7 @@ export function Search() {
                       >
                         <ComboboxOptions
                           anchor="bottom"
-                          className="absolute mt-1 max-h-60 w-[375px] overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-none sm:text-sm"
+                          className="absolute mt-1 max-h-60 w-[375px] overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-hidden sm:text-sm"
                         >
                           {loading ? (
                             <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
@@ -317,7 +317,7 @@ export function Search() {
                         </div>
                         <button
                           type="button"
-                          className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                           Choisir
                         </button>
@@ -329,7 +329,7 @@ export function Search() {
             </Popover>
           </PopoverGroup>
 
-          <Button className="w-36 h-18 rounded-full bg-black text-white p-3">
+          <Button className="w-36 rounded-full bg-black text-white p-3">
             Rechercher
           </Button>
         </div>

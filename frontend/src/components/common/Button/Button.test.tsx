@@ -16,11 +16,11 @@ describe('Button', () => {
     expect(button.className).toContain(
       'relative isolate inline-flex items-center justify-center gap-x-2 rounded-lg border text-base/6 font-semibold'
     );
-    expect(button.className).toContain('border-transparent bg-[--btn-border]');
+    expect(button.className).toContain('border-transparent bg-(--btn-border)');
 
     fireEvent.focus(button);
     expect(button.className).toContain(
-      'focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500'
+      'focus:outline-hidden data-focus:outline data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500'
     );
   });
 
@@ -31,7 +31,7 @@ describe('Button', () => {
     );
 
     expect(button.className).toContain(
-      'border-zinc-950/10 text-zinc-950 data-[active]:bg-zinc-950/[2.5%] data-[hover]:bg-zinc-950/[2.5%]'
+      'border-zinc-950/10 text-zinc-950 data-active:bg-zinc-950/[2.5%] data-hover:bg-zinc-950/[2.5%]'
     );
   });
 
@@ -42,7 +42,7 @@ describe('Button', () => {
     );
 
     expect(button.className).toContain(
-      'border-transparent text-zinc-950 data-[active]:bg-zinc-950/5 data-[hover]:bg-zinc-950/5'
+      'border-transparent text-zinc-950 data-active:bg-zinc-950/5 data-hover:bg-zinc-950/5'
     );
   });
 
@@ -54,7 +54,7 @@ describe('Button', () => {
     );
 
     expect(button.className).toContain(
-      'text-zinc-950 [--btn-bg:white] [--btn-border:theme(colors.zinc.950/10%)] [--btn-hover-overlay:theme(colors.zinc.950/2.5%)] data-[active]:[--btn-border:theme(colors.zinc.950/15%)] data-[hover]:[--btn-border:theme(colors.zinc.950/15%)]'
+      'text-zinc-950 [--btn-bg:white] [--btn-border:var(--color-zinc-950)]/10 [--btn-hover-overlay:var(--color-zinc-950)]/[2.5%] data-active:[--btn-border:var(--color-zinc-950)]/15 data-hover:[--btn-border:var(--color-zinc-950)]/15'
     );
   });
 });

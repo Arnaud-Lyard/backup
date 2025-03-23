@@ -79,4 +79,6 @@ input:nth-of-type(4):hover ~ i {
 input:nth-of-type(5):hover ~ i {
   --l: 5;
 }
-/*input:nth-of-type(N):hover ~ i {--l:N}*/
+input:nth-of-type(N):hover ~ i {
+  --l: N;
+}

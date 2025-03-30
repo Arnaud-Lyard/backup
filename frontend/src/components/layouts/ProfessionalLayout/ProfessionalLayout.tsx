@@ -41,6 +41,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/16/solid';
 import {
+  CalendarIcon,
   ChatBubbleBottomCenterIcon,
   CheckBadgeIcon,
   Cog6ToothIcon,
@@ -168,8 +169,14 @@ export function ProfessionalLayout({
                 <LockClosedIcon />
                 <SidebarLabel>Périodes de fermeture</SidebarLabel>
               </SidebarItem>
+              <SidebarItem
+                href="/admin/dashboard/availability"
+                current={pathname.startsWith('/admin/dashboard/availability')}
+              >
+                <CalendarIcon />
+                <SidebarLabel>Heures d'ouvertures</SidebarLabel>
+              </SidebarItem>
             </SidebarSection>
-
             <SidebarSpacer />
 
             <SidebarSection>

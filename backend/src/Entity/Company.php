@@ -45,9 +45,16 @@ class Company
     #[ORM\OneToMany(targetEntity: UnAvailability::class, mappedBy: 'company')]
     private Collection $unAvailabilities;
 
+    /**
+     * @var Collection<int, Availability>
+     */
+    #[ORM\OneToMany(targetEntity: Availability::class, mappedBy: 'company')]
+    private Collection $availabilities;
+
     public function __construct()
     {
         $this->unAvailabilities = new ArrayCollection();
+        $this->availabilities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,6 +146,36 @@ class Company
             // set the owning side to null (unless already changed)
             if ($unAvailability->getCompany() === $this) {
                 $unAvailability->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Availability>
+     */
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
+
+    public function addAvailability(Availability $availability): static
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities->add($availability);
+            $availability->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): static
+    {
+        if ($this->availabilities->removeElement($availability)) {
+            // set the owning side to null (unless already changed)
+            if ($availability->getCompany() === $this) {
+                $availability->setCompany(null);
             }
         }
 

@@ -24,8 +24,7 @@ export default async function RootLayout({
       className="text-zinc-950 antialiased dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950"
     >
       <head>
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        <link rel="stylesheet" href="/fonts/inter/inter.css" />
       </head>
       <body>
         <Providers>

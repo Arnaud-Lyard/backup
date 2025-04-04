@@ -14,6 +14,7 @@ use App\Entity\Company;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -129,6 +130,7 @@ final class CompanyController extends AbstractController
     $company->setOwner($user);
 
     $logo = $request->files->get('logo');
+
     if ($logo) {
       $filesystem->remove($this->logosDirectory . '/' . $company->getLogo());
       $logoFileName = $this->fileUploader->upload($logo);

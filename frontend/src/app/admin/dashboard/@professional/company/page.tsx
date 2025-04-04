@@ -365,7 +365,7 @@ export default function Settings() {
                         name="logo"
                         type="file"
                         className="sr-only"
-                        required={true}
+                        required={false}
                         onChange={handleFileChange}
                       />
                     </label>

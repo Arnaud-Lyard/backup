@@ -117,7 +117,9 @@ export function Search() {
                 <>
                   <PopoverButton
                     className={`transition duration-300 hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
-                      open ? 'bg-slate-100' : ''
+                      open
+                        ? 'bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-opacity-75'
+                        : 'focus:outline-none'
                     }`}
                   >
                     Lieu de l&apos;intervention
@@ -157,7 +159,7 @@ export function Search() {
                       >
                         <ComboboxOptions
                           anchor="bottom"
-                          className="absolute mt-1 max-h-60 w-[375px] overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-hidden sm:text-sm"
+                          className="absolute mt-1 max-h-60 w-[465px] overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-gray-300 focus:outline-hidden sm:text-sm"
                         >
                           {loading ? (
                             <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
@@ -220,8 +222,10 @@ export function Search() {
               {({ open }) => (
                 <>
                   <PopoverButton
-                    className={`transition duration-300 hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
-                      open ? 'bg-slate-100' : ''
+                    className={`hover:bg-slate-100 p-3 rounded-full text-gray-600 ${
+                      open
+                        ? 'bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-opacity-75'
+                        : 'focus:outline-none'
                     }`}
                   >
                     Date souhaitée
@@ -317,7 +321,7 @@ export function Search() {
                         </div>
                         <button
                           type="button"
-                          className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="mt-8 w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                         >
                           Choisir
                         </button>
@@ -329,7 +333,7 @@ export function Search() {
             </Popover>
           </PopoverGroup>
 
-          <Button className="w-36 rounded-full bg-black text-white p-3">
+          <Button className="w-36 rounded-full bg-blue-600 text-white p-3">
             Rechercher
           </Button>
         </div>

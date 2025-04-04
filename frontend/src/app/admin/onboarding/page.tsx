@@ -211,6 +211,7 @@ export default function OnBoarding() {
                 disabled={true}
                 defaultValue={session?.user?.email}
                 required={true}
+                autoComplete="email"
               />
             </div>
           </section>
@@ -227,21 +228,22 @@ export default function OnBoarding() {
             <div>
               <Combobox value={selected} onChange={setSelected}>
                 <div className="relative mt-1">
-                  <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus-within:ring-2 focus-within:ring-blue-500 sm:text-sm border hover:border-zinc-300">
-                    <ComboboxInput
-                      name="address"
-                      className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-2 border border-zinc-950/10 data-hover:border-zinc-950/20 focus:ring-blue-500 focus:outline-hidden"
-                      displayValue={(address: any) => address?.name || ''}
-                      onChange={(event) => setQuery(event.target.value)}
-                      required={true}
+                  <ComboboxInput
+                    name="address"
+                    className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-hidden  focus:border-slate-400
+                        hover:border-slate-300 shadow-sm focus:shadow-sm"
+                    displayValue={(address: any) => address?.name || ''}
+                    onChange={(event) => setQuery(event.target.value)}
+                    required={true}
+                    placeholder="Entrer une adresse"
+                    autoComplete="off"
+                  />
+                  <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <ChevronUpDownIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
                     />
-                    <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-                      <ChevronUpDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </ComboboxButton>
-                  </div>
+                  </ComboboxButton>
                   <Transition
                     as={Fragment}
                     leave="transition ease-in duration-100"
